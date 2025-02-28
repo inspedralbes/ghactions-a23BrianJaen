@@ -16,7 +16,6 @@ jobs:
         # 👇 Verificar si 'dist' existe
         - run: ls -la dist || echo "⚠️ Directori 'dist' no existeix!"
 
-        # 👇 Store the dist folder
         - uses: actions/upload-artifact@v4
           with:
             name: app-build
