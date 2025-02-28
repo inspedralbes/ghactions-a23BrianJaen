@@ -21,10 +21,6 @@ const mostrarNumero = (num) => {
 </template>
 
 <style scoped>
-:root {
-  color-scheme: light dark;
-}
-
 .calculadora {
   text-align: center;
   font-family: Arial, sans-serif;
