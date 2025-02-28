@@ -36,7 +36,7 @@ jobs:
           name: app-build
           path: dist
 
-      - name: Verificar contenido descargado
+      - name: Verificar contenid del directori descarregat
         run: ls -la dist || echo "⚠️ No s'ha descarregat res a 'dist'!"
 
       - name: scp a produccio

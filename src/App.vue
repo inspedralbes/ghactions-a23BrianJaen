@@ -1,30 +1,63 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from "vue";
+
+const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const mensaje = ref("");
+
+const mostrarNumero = (num) => {
+  mensaje.value = `Has clicat el número: ${num}`;
+};
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="calculadora">
+    <div class="teclat">
+      <button v-for="num in numeros" :key="num" @click="mostrarNumero(num)" class="tecla">
+        {{ num }}
+      </button>
+    </div>
+    <p v-if="mensaje" class="missatge">{{ mensaje }}</p>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+:root {
+  color-scheme: light dark;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.calculadora {
+  text-align: center;
+  font-family: Arial, sans-serif;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.teclat {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tecla {
+  width: 60px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border: 2px solid #ffffff;
+  background-color: #000000;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.tecla:hover {
+  background-color: #ddd;
+}
+
+.missatge {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
 }
 </style>
