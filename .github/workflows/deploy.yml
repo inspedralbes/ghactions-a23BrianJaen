@@ -20,15 +20,18 @@ jobs:
             name: app-build
             path: dist
 
-
-        - name: Obtenint el codi del respositori
-          uses: actions/checkout@v4
+  Pujar-a-produccio-amb-SCP:
+          runs-on: ubuntu-latest
+          needs: [build]
+          steps:
+            - name: Obtenint el codi del respositori
+              uses: actions/checkout@v4
       
-        - name: scp a produccio
-          run: |
-              echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/prod_key.pem
-              chmod 600 ~/prod_key.pem
+            - name: scp a produccio
+              run: |
+                echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/prod_key.pem
+                chmod 600 ~/prod_key.pem
                 cd ${{ github.workspace }}
-                scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/a23brijaemed/web/a23brijaemed.daw.inspedralbes.cat/public_html/ghactions-a23BrianJaen
+                scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/a23brijaemed/web/a23brijaemed.daw.inspedralbes.cat/public_html/ghactions-a23BrianJaen
                 
-        - run: echo "🍏 This job's status is ${{ job.status }}."
+            - run: echo "🍏 This job's status is ${{ job.status }}."
