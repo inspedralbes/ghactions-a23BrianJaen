@@ -1,19 +1,5 @@
-# transversals
+# Vue 3 + Vite
 
-Esquema mínim de carpetes pels projectes transversals
+This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-És obligatori seguir aquesta estructura tot i que la podeu ampliar.
-
-## Atenció
-
-Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre projecte (utilitzant markdown)
-
-# Aquest fitxer ha de contenir com a mínim
-
-* Nom dels integrants
-* Nom del projecte
-* Petita descripció
-* Adreça del gestor de tasques (taiga, jira, trello...)
-* Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)
-* URL de producció (quan la tingueu)
-* Estat: (explicació d'en quin punt està)
+Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
