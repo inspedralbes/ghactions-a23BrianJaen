@@ -20,10 +20,7 @@ jobs:
             name: app-build
             path: dist
 
-  Pujar-a-produccio-amb-SCP:
-          runs-on: ubuntu-latest
-          needs: [build]
-          steps:
+
             - name: Obtenint el codi del respositori
               uses: actions/checkout@v4
       
