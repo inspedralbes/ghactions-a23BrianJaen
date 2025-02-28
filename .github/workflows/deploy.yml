@@ -1,5 +1,5 @@
 name: Preparant per producció
-run-name: ${{ github.actor }} està pujant l'aplicació a PROD  🚀
+run-name: ${{ github.actor }} està pujant l'aplicació a PROD 🚀
 on: [push]
 jobs:
   build:
@@ -13,6 +13,7 @@ jobs:
             cache: 'npm'
         - run: npm install
         - run: npm run build --if-present
+
         # 👇 Verificar si 'dist' existe
         - run: ls -la dist || echo "⚠️ Directori 'dist' no existeix!"
 
@@ -22,17 +23,26 @@ jobs:
             path: dist
 
   Pujar-a-produccio-amb-SCP:
-          runs-on: ubuntu-latest
-          needs: [build]
-          steps:
-            - name: Obtenint el codi del respositori
-              uses: actions/checkout@v4
-      
-            - name: scp a produccio
-              run: |
-                echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/prod_key.pem
-                chmod 600 ~/prod_key.pem
-                cd ${{ github.workspace }}
-                scp -r -o stricthostkeychecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" ./dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/a23brijaemed/web/a23brijaemed.daw.inspedralbes.cat/public_html/ghactions-a23BrianJaen
-                
-            - run: echo "🍏 This job's status is ${{ job.status }}."
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Obtenint el codi del respositori
+        uses: actions/checkout@v4
+
+      # 👇 Descargar el artifact del build
+      - name: Descarregant l'arxiu construït
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: dist
+
+      - name: Verificar contenido descargado
+        run: ls -la dist || echo "⚠️ No s'ha descarregat res a 'dist'!"
+
+      - name: scp a produccio
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/prod_key.pem
+          chmod 600 ~/prod_key.pem
+          scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "~/prod_key.pem" dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/a23brijaemed/web/a23brijaemed.daw.inspedralbes.cat/public_html/ghactions-a23BrianJaen
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
